@@ -39,8 +39,8 @@ func main() {
 
 // Init resets all the things
 func (t *SimpleChaincode) Init(stub *shim.ChaincodeStub, function string, args []string) ([]byte, error) {
-	if len(args) != 5 {
-		return nil, errors.New("Incorrect number of arguments. Expecting 1")
+	if len(args) != 3 {
+		return nil, errors.New("Incorrect number of arguments. Expecting 3")
 	}
 
 	err := stub.PutState("ticketid", []byte(args[0]))
@@ -55,7 +55,7 @@ func (t *SimpleChaincode) Init(stub *shim.ChaincodeStub, function string, args [
 		return nil, err
 	}
 
-	err = stub.PutState("status", []byte(args[2]))
+	err = stub.PutState("ticketstatus", []byte(args[2]))
 
 	if err != nil {
 		return nil, err
@@ -94,7 +94,7 @@ func (t *SimpleChaincode) status(stub *shim.ChaincodeStub) ([]byte, error) {
     var jsonResp string
     var err error
 
-    valAsbytes, err := stub.GetState("status")
+    valAsbytes, err := stub.GetState("ticketstatus")
     if err != nil {
         jsonResp = "{\"Error\":\"Failed to get status\"}"
         return nil, errors.New(jsonResp)
